@@ -15,3 +15,13 @@ for hostfilename in glob.glob('./host_vars/*.yml'):
             groups[ hostgroup ]['hosts'].append( host['hostname'] )
 
 print(json.dumps(groups))
+
+"""
+testing 'templates/test.j2' jinja template
+"""
+"""
+for host in groups['servers']:
+   ipAddress = ([host]["vm_interfaces"][1]["ip"])
+   print(ipAddress)
+"""
+
