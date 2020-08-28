@@ -9,19 +9,24 @@ groups = {}
 for hostfilename in glob.glob('./host_vars/*.yml'):
     with open(hostfilename, 'r') as hostfile:
         host = yaml.load(hostfile, Loader=yaml.FullLoader)
+
         for hostgroup in host['host_groups']:
-            if hostgroup not in groups.keys():
-                groups[ hostgroup ] = { 'hosts': [] }
-#               groups[ hostgroup ] = { 'ip': []}
+            groups[ hostgroup ] = { 'hosts': [] }
             groups[ hostgroup ]['hosts'].append( host['hostname'] )
-#            groups[ hostgroup ]['ip'].append(host['vm_interfaces'][1]['ip'])
-
-
+""""
+        try:
+            if ('servers' in groups.keys()) and ([host]['vm_interfaces'][1]['ip']):
+                for ip in host['vm_interfaces'][1]['ip']:
+                    groups['ipAddress'] = []
+                    groups['ipAddress'].append(ip)
+        except KeyError:
+            pass
+"""
 print(json.dumps(groups))
 
-"""
-testing 'templates/test.j2' jinja template
-"""
+
+# testing 'templates/test.j2' jinja template
+
 """
 for x in groups['servers']['hosts']:
    ipAddress = (host['vm_interfaces'][1]['ip'])
