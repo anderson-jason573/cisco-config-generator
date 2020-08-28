@@ -5,23 +5,25 @@ import yaml
 import glob
 
 groups = {}
+ipAddress = []
 
 for hostfilename in glob.glob('./host_vars/*.yml'):
     with open(hostfilename, 'r') as hostfile:
         host = yaml.load(hostfile, Loader=yaml.FullLoader)
 
+#        print(json.dumps(host, indent= 4))
+
         for hostgroup in host['host_groups']:
             groups[ hostgroup ] = { 'hosts': [] }
             groups[ hostgroup ]['hosts'].append( host['hostname'] )
-""""
+
         try:
-            if ('servers' in groups.keys()) and ([host]['vm_interfaces'][1]['ip']):
-                for ip in host['vm_interfaces'][1]['ip']:
-                    groups['ipAddress'] = []
-                    groups['ipAddress'].append(ip)
+            ip = host['vm_interfaces'][1]['ip']
+            ipAddress.append(ip)
         except KeyError:
             pass
-"""
+#            print(host['hostname'] + ' has no address at specified key')
+
 print(json.dumps(groups))
 
 
